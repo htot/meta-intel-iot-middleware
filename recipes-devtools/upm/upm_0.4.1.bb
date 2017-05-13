@@ -2,6 +2,8 @@ SUMMARY = "Sensor/Actuator repository for Mraa"
 SECTION = "libs"
 AUTHOR = "Brendan Le Foll, Tom Ingleby, Yevgeniy Kiveisha"
 
+TARGET_CPPFLAGS +="-fpermissive"
+
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=d1cc191275d6a8c5ce039c75b2b3dc29"
 
