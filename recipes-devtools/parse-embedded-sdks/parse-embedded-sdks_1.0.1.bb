@@ -3,7 +3,7 @@
 
 DESCRIPTION = "Lets you use Parse for building Internet of Things (IoT) applications with connected devices"
 HOMEPAGE = "https://github.com/ParsePlatform/parse-embedded-sdks"
-LICENSE = "Parse License"
+LICENSE = "Parse"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=340c4660f360f3d393d95ed8c6dd2b28"
 SECTION = "libs"
 DEPENDS = "curl util-linux"
