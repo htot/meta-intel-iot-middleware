@@ -3,7 +3,7 @@ SECTION = "libs"
 AUTHOR = "Brendan Le Foll, Tom Ingleby"
 
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://COPYING;md5=e8db6501ed294e65418a933925d12058"
+LIC_FILES_CHKSUM = "file://COPYING;md5=66493d54e65bfc12c7983ff2e884f37f"
 
 S = "${WORKDIR}/git"
 
@@ -38,7 +38,8 @@ PACKAGECONFIG ??= "python nodejs"
 PACKAGECONFIG[python] = "-DBUILDSWIGPYTHON=ON, -DBUILDSWIGPYTHON=OFF, swig-native python,"
 PACKAGECONFIG[nodejs] = "-DBUILDSWIGNODE=ON, -DBUILDSWIGNODE=OFF, swig-native nodejs,"
 
-EXTRA_OECMAKE_append = "-DINSTALLGPIOTOOL=ON"
+EXTRA_OECMAKE_append = " -DINSTALLGPIOTOOL=ON -DPYTHON_SITE_DIR:FILEPATH=${PYTHON_SITEPACKAGES_DIR} -DBASE_LIB_INSTALL_DIR=${base_libdir} -DCMAKE_SKIP_RPATH=ON"
+
 
 do_compile_prepend () {
   # when yocto builds in ${D} it does not have access to ../git/.git so git
