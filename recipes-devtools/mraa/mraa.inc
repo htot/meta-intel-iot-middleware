@@ -9,6 +9,14 @@ S = "${WORKDIR}/git"
 
 inherit distutils-base pkgconfig python-dir cmake
 
+do_install() {
+    oe_runmake install DESTDIR=${D}
+# I believe in case of multilib these packages are installed in the wrong place, if so move them
+    if [ ${WORKDIR}/image/usr/lib != ${D}${libdir} ]; then 
+        mv ${WORKDIR}/image/usr/lib ${D}${libdir}
+    fi
+}
+
 PACKAGES =+ "python-${PN} node-${PN}"
 
 # python-mraa package containing Python bindings
