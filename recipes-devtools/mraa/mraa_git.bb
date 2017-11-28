@@ -1,18 +1,19 @@
 SUMMARY = "Linux Library for low speed I/O Communication"
+HOMEPAGE = "https://github.com/intel-iot-devkit/mraa"
 SECTION = "libs"
-AUTHOR = "Brendan Le Foll, Tom Ingleby, Dmitry Rozhkov"
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=66493d54e65bfc12c7983ff2e884f37f"
 
-SRCREV = "8ddbcde84e2d146bc0f9e38504d6c89c14291480"
-PV = "1.7.0-git${SRCPV}"
+SRCREV = "eb7238d9afea044701dba1c26cc5076854e3238c"
+PV = "1.8.0-git${SRCPV}"
 
-SRC_URI = "git://github.com/intel-iot-devkit/${BPN}.git;protocol=http \
-           file://0001-intel_edison_fab-enable-support-for-vanilla-kernels-.patch \
-          "
+SRC_URI = "git://github.com/intel-iot-devkit/${BPN}.git;protocol=http"
 
 S = "${WORKDIR}/git"
+
+# CMakeLists.txt checks the architecture, only x86 and ARM supported for now
+COMPATIBLE_HOST = "(x86_64.*|i.86.*|aarch64.*|arm.*)-linux"
 
 inherit cmake distutils3-base
 
@@ -30,7 +31,13 @@ FILES_${PN}-utils = "${bindir}/"
 # override this in local.conf to get needed bindings.
 # BINDINGS_pn-mraa="python"
 # will result in only the python bindings being built/packaged.
-BINDINGS ??= "python ${@ 'nodejs' if oe.types.boolean(d.getVar('HAVE_NODEJS') or '0') else '' }"
+# Note: 'nodejs' is disabled by default because the bindings
+# generation currently fails with nodejs (>v7.x).
+BINDINGS ??= "python"
+
+# nodejs isn't available for armv4/armv5 architectures
+BINDINGS_armv4 ??= "python"
+BINDINGS_armv5 ??= "python"
 
 PACKAGECONFIG ??= "${@bb.utils.contains('PACKAGES', 'node-${PN}', 'nodejs', '', d)} \
  ${@bb.utils.contains('PACKAGES', '${PYTHON_PN}-${PN}', 'python', '', d)}"
